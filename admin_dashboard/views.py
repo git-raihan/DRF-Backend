@@ -33,5 +33,18 @@ class AdminDashboardView(APIView):
     permission_classes = [IsAuthenticated,IsSuperUser]
 
     def get(self, request):
-        # print(request.headers)
-        return Response({"message": "Welcome to the Admin Dashboard"})
+        user_data = {
+            "id": request.user.id,
+            "first_name": request.user.first_name,
+            "last_name": request.user.last_name,
+            "email": request.user.email,
+            "is_superuser": request.user.is_superuser,
+            "is_staff": request.user.is_staff,
+            "is_active": request.user.is_active,
+        }
+        return Response(
+            {
+                "message": "Welcome to the Admin Dashboard", 
+                "data":user_data
+            }
+        )
